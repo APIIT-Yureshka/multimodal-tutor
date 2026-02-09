@@ -9,7 +9,7 @@ export default function App() {
 
   const createSession = async () => {
     // IMPORTANT: Since nginx proxies /api -> backend, the endpoint should be /api/session/create
-    const res = await fetch("/api/session/create", { method: "POST" });
+    const res = await fetch("/session/create", { method: "POST" });
 
     if (!res.ok) {
       const txt = await res.text().catch(() => "");
