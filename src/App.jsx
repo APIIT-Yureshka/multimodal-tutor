@@ -9,7 +9,7 @@ export default function App() {
 
   const createSession = async () => {
     // Your backend route is POST /api/session/create (see main.py)
-    const res = await fetch("/api/session/create", { method: "POST" });
+    const res = await fetch("/session/create", { method: "POST" });
 
     if (!res.ok) {
       const txt = await res.text().catch(() => "");
