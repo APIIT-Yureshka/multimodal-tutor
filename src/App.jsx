@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://147.93.153.186/api"; // match nginx config
+const SOCKET_URL = "http://147.93.153.186"; // match nginx config
 
 export default function App() {
   const [code, setCode] = useState(null);
@@ -12,7 +12,7 @@ export default function App() {
   const createSession = async () => {
     const res = await fetch(`${SOCKET_URL}/api/session/create`, {
       method: "POST",
-    });
+    }); // This is now correct
     const data = await res.json();
     setCode(data.code);
 
