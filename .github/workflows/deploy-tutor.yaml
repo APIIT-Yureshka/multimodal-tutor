@@ -1,0 +1,37 @@
+name: Deploy tutor service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use clean install + build with correct base
+        run: |
+          npm ci
+          npm run build -- --base=/tutor/
+        working-directory: ${{ github.workspace }}
+
+      - name: Verify dist exists
+        run: ls -la dist
+
+      - name: Check built index.html uses /tutor/ base
+        run: |
+          grep -nE '(src="/assets|href="/assets)' dist/index.html && (echo "ERROR: still using /assets (wrong base)"; exit 1) || true
+          grep -nE '(src="/tutor/|href="/tutor/|base href="/tutor/")' dist/index.html || (echo "ERROR: missing /tutor/ in built index.html"; exit 1)
+
+      - name: Deploy dist to Nginx web root
+        run: |
+          mkdir -p /var/www/multimodal-tutor/html/
+          rm -rf /var/www/multimodal-tutor/html/*
+          cp -r dist/* /var/www/multimodal-tutor/html/
+
+      - name: Reload Nginx
+        run: sudo systemctl reload nginx
