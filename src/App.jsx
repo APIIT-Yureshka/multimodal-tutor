@@ -22,7 +22,7 @@ export default function App() {
 
     // IMPORTANT: Force socket.io to use nginx /api/socket.io path
     socketRef.current = io({
-      path: "/api/socket.io",
+      path: "/socket.io",
       transports: ["websocket", "polling"],
       withCredentials: false,
     });
