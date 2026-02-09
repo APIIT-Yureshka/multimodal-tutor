@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://147.93.153.186"; // match nginx config
+const SOCKET_URL = "https://multimodal.duckdns.org"; // match nginx config
 
 export default function App() {
   const [code, setCode] = useState(null);
