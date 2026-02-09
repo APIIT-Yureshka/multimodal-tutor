@@ -16,7 +16,7 @@ export default function App() {
     const data = await res.json();
     setCode(data.code);
 
-    socketRef.current = io(SOCKET_URL);
+    socketRef.current = io(SOCKET_URL, { path: "/api/socket.io/" });
     socketRef.current.on("connect", () => {
       socketRef.current.emit("join_session", {
         code: data.code,
